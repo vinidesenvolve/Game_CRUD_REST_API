@@ -27,6 +27,35 @@ var DB = {
     ]
 }
 
+app.get("/games", (req, res) => {
+    
+    res.json(DB)
+    res.statusCode(200)
+})
+
+app.get("/game/:id", (req, res) => {
+    const id = req.params.id
+
+    if(isNaN(id)){
+
+        res.sendStatus(400)
+
+    }else{
+        
+        let game = DB.games.find(g => g.id == id)
+
+        if(game != undefined || game != null){
+
+            res.send(game)
+            res.sendStatus(200)
+
+        }else{
+
+            res.sendStatus(404)
+        }
+    }
+})
+
 app.listen(8001, () => {
     console.log("Serve is on!")
 })
