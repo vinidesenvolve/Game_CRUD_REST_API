@@ -69,6 +69,27 @@ app.post("/game", (req, res) => {
     
 })
 
+app.delete("/game/:id", (req, res) => {
+
+    const id = req.params.id
+
+    if(isNaN(id)){
+
+        res.sendStatus(400)
+
+    }else{
+
+        let gameId = DB.games.findIndex(g => g.id == id)
+
+            if(gameId == -1){
+                res.sendStatus(404)
+            }else{
+                DB.games.splice(gameId, 1)
+                res.sendStatus(200)
+            }
+    }
+})
+
 app.listen(8001, () => {
     console.log("Serve is on!")
 })
