@@ -56,6 +56,19 @@ app.get("/game/:id", (req, res) => {
     }
 })
 
+app.post("/game", (req, res) => {
+    
+    let {id, title, year, price} = req.body
+
+   //validation 
+
+    DB.games.push({ id, title, year, price })
+
+    res.json(DB)
+    res.sendStatus(200)
+    
+})
+
 app.listen(8001, () => {
     console.log("Serve is on!")
 })
