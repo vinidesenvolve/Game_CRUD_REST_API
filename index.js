@@ -44,7 +44,7 @@ app.get("/game/:id", (req, res) => {
         
         let game = DB.games.find(g => g.id == id)
 
-        if(game != undefined || game != null){
+        if(game != undefined){
 
             res.send(game)
             res.sendStatus(200)
@@ -87,6 +87,43 @@ app.delete("/game/:id", (req, res) => {
                 DB.games.splice(gameId, 1)
                 res.sendStatus(200)
             }
+    }
+})
+
+app.put("/game/:id", (req, res) => {
+
+    const id = req.params.id
+
+    if (isNaN(id)){
+
+        res.sendStatus(400)
+
+    }else{
+
+        let {title, year, price} = req.body
+
+        let game = DB.games.find(g => g.id == id)
+
+        if(game != undefined){
+
+            if(title != undefined){
+                game.title = title
+            }
+
+            if(year != undefined){
+                game.year = year
+            }
+            
+            if(price != undefined){
+                game.price = price
+            }
+
+            res.sendStatus(200)
+            
+        }else{
+
+            res.sendStatus(404)
+        }
     }
 })
 
